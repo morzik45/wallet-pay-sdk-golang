@@ -7,6 +7,11 @@ import (
 	"encoding/json"
 )
 
+const (
+	EventTypesOrderPaid   = "ORDER_PAID"
+	EventTypesOrderFailed = "ORDER_FAILED"
+)
+
 // Event object structure (see https://docs.wallet.pay.finance/docs/webhooks)
 type Event struct {
 	EventDateTime string  `json:"eventDateTime"` // ISO-8601 date time when some event triggered this webhook message

@@ -8,10 +8,15 @@ import (
 )
 
 const (
-	OrderStatusSuccess      = "SUCCESS"
-	OrderStatusAlready      = "ALREADY"
-	OrderStatusConflict     = "CONFLICT"
-	OrderStatusAccessDenied = "ACCESS_DENIED"
+	CreateOrderStatusSuccess      = "SUCCESS"
+	CreateOrderStatusAlready      = "ALREADY"
+	CreateOrderStatusConflict     = "CONFLICT"
+	CreateOrderStatusAccessDenied = "ACCESS_DENIED"
+
+	OrderStatusActive    = "ACTIVE"
+	OrderStatusExpired   = "EXPIRED"
+	OrderStatusPaid      = "PAID"
+	OrderStatusCancelled = "CANCELLED"
 
 	TON  = "TON"
 	BTC  = "BTC"
@@ -74,7 +79,7 @@ func (c *Client) CreateOrder(ctx context.Context, orderRequest OrderRequest) (*O
 		return nil, err
 	}
 	switch response.Status {
-	case OrderStatusSuccess, OrderStatusAlready:
+	case CreateOrderStatusSuccess, CreateOrderStatusAlready:
 		return &response.Preview, nil
 	default:
 		return nil, fmt.Errorf("error creating order: status=%s, message=%s", response.Status, response.Message)
@@ -96,7 +101,7 @@ func (c *Client) GetPreviewOrder(ctx context.Context, id string) (*OrderPreview,
 		return nil, err
 	}
 	switch response.Status {
-	case OrderStatusSuccess:
+	case CreateOrderStatusSuccess:
 		return &response.Preview, nil
 	default:
 		return nil, fmt.Errorf("error getting order: status=%s, message=%s", response.Status, response.Message)

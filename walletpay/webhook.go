@@ -22,10 +22,10 @@ type Event struct {
 
 // Payload object structure
 type Payload struct {
-	Status                 string              `json:"status"`                 // Order status, clarifying reason of FAIL (e.g. status=EXPIRED) Sent if type=ORDER_FAILED
 	ID                     int64               `json:"id"`                     // Order id
 	Number                 string              `json:"number"`                 // Human-readable (short) order number
 	ExternalID             string              `json:"externalId"`             // Order ID in the Merchant system
+	Status                 string              `json:"status"`                 // Order status, clarifying reason of FAIL (e.g. status=EXPIRED) Sent if type=ORDER_FAILED
 	CustomData             string              `json:"customData"`             // Custom string given during order creation
 	OrderAmount            MoneyAmount         `json:"orderAmount"`            // Order amount and currency code Format: { "currencyCode": "TON", "amount": "30.45" }
 	SelectedPaymentOption  SelectPaymentOption `json:"selectedPaymentOption"`  // User selected payment option. Format: {"amount": {"currencyCode": "TON","amount": "10.0"},"exchangeRate": "1.0"} Sent if type=ORDER_PAID

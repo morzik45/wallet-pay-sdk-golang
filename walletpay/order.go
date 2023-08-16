@@ -33,14 +33,14 @@ type MoneyAmount struct {
 }
 
 type OrderRequest struct {
-	Amount             MoneyAmount `json:"amount"`             // Required. Order mount
-	Description        string      `json:"description"`        // Required. Description of order. Length is limited from 5 to 100 characters.
-	ReturnURL          string      `json:"returnUrl"`          // Optional. URL to redirect after paying order, length is limited to 255 characters.
-	FailReturnURL      string      `json:"failReturnUrl"`      // Optional. URL to redirect after unsuccessful order completion (expiration/cancellation/etc). Length is limited to 255 characters.
-	CustomData         string      `json:"customData"`         // Optional. Any custom string, will be provided through webhook and order status polling, length is limited to 255 characters
-	ExternalID         string      `json:"externalId"`         // Required. Order ID in the Merchant system. Use to prevent orders duplication due to request retries. Length is limited to 255 characters
-	TimeoutSeconds     int64       `json:"timeoutSeconds"`     // Required. Order TTL, if the order is not paid within the timeout period. Min: 30, Max: 86400
-	CustomerTelegramID int64       `json:"customerTelegramId"` // Required. The customer's telegram id (User_id).
+	Amount                 MoneyAmount `json:"amount"`                 // Required. Order mount
+	Description            string      `json:"description"`            // Required. Description of order. Length is limited from 5 to 100 characters.
+	ReturnURL              string      `json:"returnUrl"`              // Optional. URL to redirect after paying order, length is limited to 255 characters.
+	FailReturnURL          string      `json:"failReturnUrl"`          // Optional. URL to redirect after unsuccessful order completion (expiration/cancellation/etc). Length is limited to 255 characters.
+	CustomData             string      `json:"customData"`             // Optional. Any custom string, will be provided through webhook and order status polling, length is limited to 255 characters
+	ExternalID             string      `json:"externalId"`             // Required. Order ID in the Merchant system. Use to prevent orders duplication due to request retries. Length is limited to 255 characters
+	TimeoutSeconds         int64       `json:"timeoutSeconds"`         // Required. Order TTL, if the order is not paid within the timeout period. Min: 30, Max: 86400
+	CustomerTelegramUserId int64       `json:"customerTelegramUserId"` // Required. The customer's telegram id (User_id).
 }
 
 type OrderResponse struct {
@@ -59,10 +59,11 @@ type OrderPreview struct {
 	Status             string      `json:"status"`             // Required. Order status. Enum: "ACTIVE" "EXPIRED" "PAID" "CANCELLED"
 	Number             string      `json:"number"`             // Required. Human-readable (short) order number
 	Amount             MoneyAmount `json:"amount"`             // Required. Order amount
-	CreateDateTime     string      `json:"createDateTime"`     // Required. ISO-8601 date time when the order was created
+	CreatedDateTime    string      `json:"createdDateTime"`    // Required. ISO-8601 date time when the order was created
 	ExpirationDateTime string      `json:"expirationDateTime"` // Required. ISO-8601 date time when the order will expire
 	CompletedDateTime  string      `json:"completedDateTime"`  // Optional. ISO-8601 date time when the order was PAID/EXPIRED/ETC
 	PayLink            string      `json:"payLink"`            // Required. URL to show payer on Store`s side
+	DirectPayLink      string      `json:"directPayLink"`      // Optional. URL to show payer on Store`s side and WebApp
 }
 
 func (c *Client) CreateOrder(ctx context.Context, orderRequest OrderRequest) (*OrderPreview, error) {
